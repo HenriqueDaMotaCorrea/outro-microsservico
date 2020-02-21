@@ -1,0 +1,16 @@
+<!html>
+  <body>
+    <h3>Tesseract OCR - Upload do arquivo .pdf</h3>
+    <br>
+    <form>
+      {% csrf_token %}
+      <!--input id="pdf" type="file" accept='pdf' required/>
+      <br-->
+      {{ form }}
+      <input type="submit" value="Extrair texto"/>
+    </form>
+    <div id="text">
+      {{ outputText }}
+    </div>
+  </body>
+</html>
