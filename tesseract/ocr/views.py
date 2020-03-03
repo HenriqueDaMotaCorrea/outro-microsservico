@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import forms
-from core import tesseract_pdf
+from core import tesseract_pdf as t_pdf
 
 
 def index(request):
@@ -11,13 +11,16 @@ def index(request):
 def ocr(request):
     form = forms.UploadPdfForm()
     outputText = None
+
     if request.method == 'POST':
         form = forms.UploadPdfForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            outputText = tesseract_pdf.get_pdf_string()
-        else:
-            form = forms.UploadPdfForm()
-    return render(request,
-                  'ocr/ocr.html',
-                  {'form': form, 'outputText': outputText})
+
+            pdf_path = 'uploads/' + request.FILES['pdf_file'].name
+            outputText = t_pdf.read_pdf_from_path(pdf_path)
+    else:
+        form = forms.UploadPdfForm()
+
+    context = {'form': form, 'outputText': outputText}
+    return render(request, 'ocr/ocr.html', context)
