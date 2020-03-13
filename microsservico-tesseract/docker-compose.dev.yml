@@ -1,5 +1,27 @@
 version: '3'
 services:
+  redis:
+    image: redis:5.0.5
+    container_name: microsservico_tesseract_redis
+    hostname: redis
+    volumes:
+      - redis_data:/data
+    networks:
+      - basenet
+
+  db:
+    image: postgres:11
+    container_name: microsservico_tesseract_pg
+    ports:
+      - 54321:5432
+    volumes:
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      - basenet
+    depends_on:
+      - redis
+
   web:
     build: ./src
     command: python3 tesseract/manage.py runserver
@@ -9,3 +31,14 @@ services:
       - ./src:/app/src
     ports:
       - 8000:8000
+    networks:
+      - basenet
+    depends_on:
+      - db
+
+networks:
+  basenet:
+
+volumes:
+  postgres_data:
+  redis_data:
