@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'tesseract.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'telessaude_tesseract',
+        'NAME': 'microsservico_tesseract',
         'USER': 'postgres'
     }
 }
