@@ -16,6 +16,7 @@ dockerpty==0.4.1
 docopt==0.6.2
 graphene==2.1.8
 graphene-django==2.9.0
+graphene-file-upload==1.2.2
 graphql-core==2.3.1
 graphql-relay==2.0.1
 idna==2.9
